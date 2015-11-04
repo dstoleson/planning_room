@@ -1,0 +1,20 @@
+<div class="container">
+  <div class="row">
+    <% content_for :title do %>Projects<% end %>
+    <h3>Projects</h3>
+    <p><%= link_to 'New Project', new_project_path %></p>
+    <table class="table">
+      <tbody>
+        <% @projects.each do |project| %>
+          <tr>
+            <td><%= link_to project.name, edit_project_path(project) %></td>
+            <td><%= project.project_type.name %></td>
+            <td><%= link_to project.dropbox_url, project.dropbox_url, target: "_blank" %></td>
+            <td><%= project.manager_name %></td>
+            <td><%= mail_to project.manager_email, nil, :subject => project.name %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

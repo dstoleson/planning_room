@@ -1,0 +1,14 @@
+<% content_for :title do %>New Project<% end %>
+<h3>New Project</h3>
+<div class="form">
+	<%= simple_form_for @project do |f| %>
+		<%= f.error_notification %>
+		<%= f.input :name, autofocus: true %>
+		<%= f.association :project_type, label_method: :description, prompt: "Choose a Project Type", include_blank: false %>
+		<%= f.input :password %>
+		<%= f.input :dropbox_url %>
+		<%= f.input :manager_name %>
+		<%= f.input :manager_email %>
+		<%= f.button :submit, 'Create Project', class: 'submit' %>
+	<% end %>
+</div>

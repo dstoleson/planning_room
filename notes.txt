@@ -1,0 +1,42 @@
+
+
+UI
+==
+Planning Room
+	Private Bid
+		- Login (email & password)
+		- Project page
+
+	Open Bid
+		- Project list
+		- Login (email)
+		- Project page
+
+	Current Projects
+		- Login (password)
+		- Project page
+
+	Admin
+		- Login (username & password)
+		- Project list (ordered by date, most recent first)
+		- Create project
+		- Project details		
+
+Model
+=====
+Project (1->*ProjectActivity)
+	- name
+	- type (private, open, current)
+	- password
+	- dropbox url
+	- project manager name
+	- project manager email
+
+ProjectType (?)
+	- name
+	- code (private, open, current)
+
+ProjectActivity (*->1 Project)
+	- email
+	- date
+	

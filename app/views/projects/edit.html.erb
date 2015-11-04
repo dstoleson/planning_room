@@ -1,0 +1,31 @@
+<div class="container">
+  	<div class="row">
+		<% content_for :title do %>Edit Project<% end %>
+		<h3>Edit Project</h3>
+		<div class="form">
+			<%= simple_form_for @project do |f| %>
+				<%= f.error_notification %>
+				<%= f.input :name, autofocus: true %>
+				<%= f.association :project_type, label_method: :description, prompt: "Choose a Project Type", include_blank: false %>
+				<%= f.input :password %>
+				<%= f.input :dropbox_url, as: :url %>
+				<%= f.input :manager_name %>
+				<%= f.input :manager_email, as: :email %>
+				<%= f.button :submit, 'Update Project', class: 'submit' %>
+			<% end %>
+		</div>
+	</div>
+	<div class="row">
+        <h3>Opened By:</h3>
+        <table class="table">
+            <tbody>
+              <% @project.project_activities.each do |pa| %>
+                <tr>
+                  <td><%= pa.email %></td>
+                  <td><%= pa.accessed %></td>
+                </tr>
+              <% end %>
+            </tbody>
+        </table>
+	</div>	        
+</div>

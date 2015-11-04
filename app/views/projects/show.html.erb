@@ -1,0 +1,10 @@
+<div class="container">
+    <div class="row">
+        <% content_for :title do %>Project Details<% end %>
+        <h3>Project Details</h3>
+        <p><%= @project.name %></p>
+        <p><%= link_to @project.dropbox_url, @project.dropbox_url, target: "_blank" %></p>
+        <p><%= @project.manager_name %></p>
+        <p><%= mail_to @project.manager_email, nil, :subject => @project.name %></p>
+    </div>
+</div>
