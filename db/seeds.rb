@@ -9,3 +9,5 @@ ProjectType.create([{name: "private", description: "Private"},
 					{name: "open", description: "Open"},
 					{name: "current", description: "Current"}])
 puts "Create ProjecTypes: private, open, current"
+
+

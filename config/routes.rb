@@ -58,4 +58,8 @@ Rails.application.routes.draw do
   #resources :project_activities
   get '/project_activities/project/:project_id', to: 'project_activities#create'
   get '/projects/type/:project_type_name', to: 'projects#index'
+  get '/login' => 'sessions#new'
+  post 'login' => 'sessions#create'
+  delete 'logout' => 'sessions#destroy'
+  get '/logout' => 'sessions#destroy'
 end

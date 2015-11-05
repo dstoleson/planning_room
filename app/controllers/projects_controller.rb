@@ -1,5 +1,8 @@
 class ProjectsController < ApplicationController
 
+	before_action :requires_user, only: [:show]
+	# before_action :requires_admin, only: [:index, :new, :create, :edit, :update, :destroy]
+
 	def index
 		Rails.logger.debug "DEBUG: session = #{session}"
 		project_type_name = params[:project_type_name]
