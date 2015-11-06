@@ -22,7 +22,7 @@
               <% @project.project_activities.each do |pa| %>
                 <tr>
                   <td><%= pa.email %></td>
-                  <td><%= pa.accessed %></td>
+                  <td><%= pa.created_at %></td>
                 </tr>
               <% end %>
             </tbody>

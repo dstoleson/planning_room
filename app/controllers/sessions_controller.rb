@@ -1,5 +1,7 @@
 class SessionsController < ApplicationController
 
+	protect_from_forgery
+
 	def new
 		# if session[:user_role] 
 		# 	redirect_to projects_path
@@ -11,16 +13,18 @@ class SessionsController < ApplicationController
 		@user = User.find_by_name(params[:session][:name])
 		Rails.logger.debug "DEBUG: user = #{@user.name}, #{@user.role}"
 		if @user
-			session[:user_role] = @user.role
-			Rails.logger.debug "DEBUG: user_role = #{session[:user_role]}"
-			redirect_to session[:previous_url]
+			session[:user] = @user
+			Rails.logger.debug "DEBUG: user = #{session[:user]}"
+			previous_url = session[:previous_url]
+			session[:previous_url] = nil
+			redirect_to previous_url
 		else
 			redirect_to '/login'
 		end
 	end
 
 	def destroy 
-	  session[:user_role] = nil 
+	  session[:user] = nil 
 	  redirect_to '/login' 
 	end
 

@@ -2,7 +2,9 @@
   <div class="row">
     <% content_for :title do %>Projects<% end %>
     <h3>Projects</h3>
-    <p><%= link_to 'New Project', new_project_path %></p>
+    <% if admin_user? %>
+      <p><%= link_to 'New Project', new_project_path %></p>
+    <% end %>
     <table class="table">
       <tbody>
         <% @projects.each do |project| %>

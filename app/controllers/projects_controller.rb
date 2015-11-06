@@ -1,7 +1,7 @@
 class ProjectsController < ApplicationController
 
-	before_action :requires_user, only: [:show]
-	# before_action :requires_admin, only: [:index, :new, :create, :edit, :update, :destroy]
+	before_action :requires_login, only: [:show]
+	before_action :requires_admin, only: [:index, :new, :create, :edit, :update, :destroy]
 
 	def index
 		Rails.logger.debug "DEBUG: session = #{session}"
@@ -51,8 +51,13 @@ class ProjectsController < ApplicationController
 	end
 
 	def show
-		@project = Project.find(params[:id])
-		Rails.logger.debug "DEBUG: project_types = #{@project_types}"		
+		@project = Project.find(params[:id])		
+		# insert activity tracking record
+		project_activity = ProjectActivity.new()
+		project_activity.project = @project
+		project_activity.email = session[:user][:name]
+		project_activity.save
+		Rails.logger.debug("DEBUG: project_activity = #{project_activity}")
 		Rails.logger.debug "DEBUG: project = |#{@project.name}|#{@project.project_type}|#{@project.password}|#{@project.dropbox_url}|#{@project.manager_name}|#{@project.manager_email}|"
 	end
 
