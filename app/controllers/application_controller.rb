@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   before_filter :store_location
+  before_filter :store_params
 
   helper_method :admin_user?
 
@@ -21,6 +22,15 @@ class ApplicationController < ActionController::Base
   	return unless request.get?
   	if (request.path != "/login") || (not session[:user].nil?)
   		session[:previous_url] = request.fullpath
+  	end
+  end
+
+  def store_params
+	Rails.logger.debug "DEBUG: ENTER: store_params"
+  	Rails.logger.debug "DEBUG: params = #{params}"
+  	return unless request.get?
+  	if (request.path != "/login")
+  		session[:previous_params] = params
   	end
   end
 

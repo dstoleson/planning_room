@@ -4,4 +4,5 @@ class User < ActiveRecord::Base
 	def admin?
 		return role == 'admin'
 	end
+
 end
