@@ -2,6 +2,7 @@
     <div class="row">
         <% content_for :title do %>Project Details<% end %>
         <h3>Project Details</h3>
+        <p><%= session[:user]["name"] %>  <%= link_to 'Logout', logout_path %></p>
         <p><%= @project.name %></p>
         <p><%= link_to @project.dropbox_url, @project.dropbox_url, target: "_blank" %></p>
         <p><%= @project.manager_name %></p>

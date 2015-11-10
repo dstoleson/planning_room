@@ -2,6 +2,9 @@
   <div class="row">
     <% content_for :title do %>Projects<% end %>
     <h3>Projects</h3>
+    <% if session[:user] && session[:user]["name"] %>
+      <p><%= session[:user]["name"] %>    <%= link_to 'Logout', logout_path %></p>
+    <% end %>
     <% if admin_user? %>
       <p><%= link_to 'New Project', new_project_path %></p>
     <% end %>
@@ -9,7 +12,11 @@
       <tbody>
         <% @projects.each do |project| %>
           <tr>
-            <td><%= link_to project.name, edit_project_path(project) %></td>
+            <% if admin_user? %>
+              <td><%= link_to project.name, edit_project_path(project) %></td>
+            <% else %>          
+              <td><%= link_to project.name, project_path(project) %></td>
+            <% end %>
             <td><%= project.project_type.name %></td>
             <td><%= link_to project.dropbox_url, project.dropbox_url, target: "_blank" %></td>
             <td><%= project.manager_name %></td>

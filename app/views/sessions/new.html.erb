@@ -1,12 +1,23 @@
 <div class="container">
   	<div class="row">
 	    <% content_for :title do %>Access Project<% end %>
-	    <h3>Access Project</h3>
+	    <% if @project %>
+	    	<h3>Access Project: <%= @project.name %></h3>
+    	<% else %>
+    		<h3>Admin Login</h3>
+    	<% end %>
 	    <div class="form">
 			<%= form_for(:session, url: login_path) do |f| %>
-				<%= f.text_field :name, :placeholder => "Name" %>
+				<% if @project.nil? || (not @project.project_type.name == 'current') %>
+					<%= f.text_field :name, :placeholder => "Name" %>
+				<% end %>
 				<%= f.text_field :password, :placeholder => "Password" %>
-				<%= f.submit "Access Project" %>
+			    <% if @project %>
+					<%= f.submit "Access Project" %>
+    			<% else %>
+					<%= f.submit "Login" %>
+    			<% end %>
+    			<%= hidden_field_tag(:url, "foo") %>
 			<% end %>
 		</div>
 	</div>
