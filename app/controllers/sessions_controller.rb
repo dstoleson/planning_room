@@ -36,13 +36,7 @@ class SessionsController < ApplicationController
 		#   2) if successful redirect to requested url		
 		if user && user.admin? && user.authenticate(params[:session][:password])
 			session[:user] = user
-
-			# if session[:previous_url].nil?
-				redirect_to projects_path
-			# else
-			# 	Rails.logger.debug "DEBUG: redirecting to #{session[:previous_url]}"
-			# 	redirect_to session[:previous_url]
-			# end
+			redirect_to projects_path
 			return
 		end
 
@@ -54,25 +48,28 @@ class SessionsController < ApplicationController
 		#   3) if unsuccessful redirect to the project page (for another)
 		#      authentication attempt
 		project = Project.find(session[:project_id])
+
 		Rails.logger.debug "DEBUG: project = #{project}"
 		Rails.logger.debug "DEBUG: project.password = #{project.password}"
 		Rails.logger.debug "DEBUG: password = #{params[:session][:password]}"
+
 		if project && project.password == params[:session][:password]
-
-			# current projects don't require a user for access, just the password
-			# use a well-defined user for current projects
-			# otherwise create a temp user for private projects
-
-			# TODO: have a real 'default' user for 'current'
-			user_name = "current_project_user"
-			if not params[:session][:name].nil?
-				user_name = params[:session][:name]
-			end
-
-			# TODO: have real 'default' user for 'private', update
+			# TODO: have real 'default' user for project logins, update
 			# user name to email after fetching
-			user = User.new(name: user_name, role: 'user')
+			user = User.new(name: params[:session][:name], role: 'user')
 			session[:user] = user
+
+			Rails.logger.debug "DEBUG: password = #{params[:session][:company_name]}"
+
+			# insert activity tracking record
+			project_activity = ProjectActivity.new()
+			project_activity.project = project
+			project_activity.email = params[:session][:name]
+			project_activity.company_name = params[:session][:company_name]
+			project_activity.save
+
+		Rails.logger.debug("DEBUG: project_activity = #{project_activity.inspect}")
+		Rails.logger.debug "DEBUG: project = #{@project.inspect}"
 			Rails.logger.debug "DEBUG: redirecting to #{session[:previous_url]}"
 			redirect_to session[:previous_url]
 			return

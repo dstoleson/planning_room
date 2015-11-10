@@ -13,4 +13,9 @@ class Project < ActiveRecord::Base
 	validates_format_of :manager_email, with: /\A[-a-z0-9_+\.]+\@([-a-z0-9]+\.)+[a-z0-9]{2,4}\z/i
 	validates_format_of :dropbox_url, with: /https?:\/\/[\S]+/
 
+	def bid_date_display
+		if not bid_date.nil?
+			return bid_date.strftime("%m/%d/%Y")
+		end
+	end
 end

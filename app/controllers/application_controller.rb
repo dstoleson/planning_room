@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
   	Rails.logger.debug "DEBUG: request.path = #{request.path}"
 	Rails.logger.debug "DEBUG: request.fullpath = #{request.fullpath}"
   	return unless request.get?
-  	if (request.path != "/login") && (request.path != '/logout')
+  	if (request.path != "/login") && (request.path != '/logout') && (not admin_user?)
   		session[:previous_url] = request.fullpath
 		Rails.logger.debug "DEBUG: previous_url = #{session[:previous_url]}"
   	end

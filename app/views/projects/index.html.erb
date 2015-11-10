@@ -18,6 +18,7 @@
               <td><%= link_to project.name, project_path(project) %></td>
             <% end %>
             <td><%= project.project_type.name %></td>
+            <td><%= project.bid_date_display %></td>
             <td><%= link_to project.dropbox_url, project.dropbox_url, target: "_blank" %></td>
             <td><%= project.manager_name %></td>
             <td><%= mail_to project.manager_email, nil, :subject => project.name %></td>

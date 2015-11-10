@@ -6,6 +6,7 @@
 		<%= f.input :name, autofocus: true %>
 		<%= f.association :project_type, label_method: :description, prompt: "Choose a Project Type", include_blank: false %>
 		<%= f.input :password %>
+		<%= select_date Date.today, :prefix => :bid_date %>
 		<%= f.input :dropbox_url %>
 		<%= f.input :manager_name %>
 		<%= f.input :manager_email %>

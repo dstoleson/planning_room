@@ -49,13 +49,6 @@ class ProjectsController < ApplicationController
 
 	def show
 		@project = Project.find(params[:id])		
-		# insert activity tracking record
-		project_activity = ProjectActivity.new()
-		project_activity.project = @project
-		project_activity.email = session[:user]["name"]
-		project_activity.save
-		Rails.logger.debug("DEBUG: project_activity = #{project_activity.inspect}")
-		Rails.logger.debug "DEBUG: project = #{@project.inspect}"
 	end
 
 	def destroy
@@ -67,9 +60,11 @@ class ProjectsController < ApplicationController
 	private
 
 	def project_params
+		Rails.logger.debug("DEBUG: params = #{params}")
     	params.require(:project).permit(:name, 
     		:project_type,
     		:password,
+    		:bid_date,
     		:dropbox_url,
     		:manager_name,
     		:manager_email,

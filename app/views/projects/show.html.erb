@@ -4,6 +4,7 @@
         <h3>Project Details</h3>
         <p><%= session[:user]["name"] %>  <%= link_to 'Logout', logout_path %></p>
         <p><%= @project.name %></p>
+        <p><%= @project.bid_date.strftime("%m/%d/%Y")%></p>
         <p><%= link_to @project.dropbox_url, @project.dropbox_url, target: "_blank" %></p>
         <p><%= @project.manager_name %></p>
         <p><%= mail_to @project.manager_email, nil, :subject => @project.name %></p>

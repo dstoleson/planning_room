@@ -8,8 +8,13 @@
     	<% end %>
 	    <div class="form">
 			<%= form_for(:session, url: login_path) do |f| %>
-				<% if @project.nil? || (not @project.project_type.name == 'current') %>
-					<%= f.text_field :name, :placeholder => "Name" %>
+				<% if @project %>
+					<%= f.text_field :name, :placeholder => "Email" %>
+				<% else %>
+					<%= f.text_field :name, :placeholder => "Login" %>
+				<% end %>
+				<% if @project && (not @project.project_type.name == 'current') %>
+					<%= f.text_field :company_name, :placeholder => "Company Name" %>
 				<% end %>
 				<%= f.text_field :password, :placeholder => "Password" %>
 			    <% if @project %>
