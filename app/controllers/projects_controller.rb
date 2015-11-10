@@ -6,9 +6,9 @@ class ProjectsController < ApplicationController
 	def index
 		Rails.logger.debug "DEBUG: session = #{session}"
 		if admin_user?
-			@projects = Project.all
+			@projects = Project.order(name: :asc)
 		else
-			@projects = Project.joins(:project_type).where(project_types: {name: "open"})
+			@projects = Project.joins(:project_type).where(project_types: {name: "open"}).order(:name)
 		end
 		Rails.logger.debug "DEBUG: projects = #{@projects}"
 		@projects.each do |project|
