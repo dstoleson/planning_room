@@ -1,15 +1,14 @@
 <% content_for :title do %>New Project<% end %>
 <h3>New Project</h3>
 <div class="form">
-	<%= simple_form_for @project do |f| %>
-		<%= f.error_notification %>
-		<%= f.input :name, autofocus: true %>
-		<%= f.association :project_type, label_method: :description, prompt: "Choose a Project Type", include_blank: false %>
-		<%= f.input :password %>
-		<%= select_date Date.today, :prefix => :bid_date %>
-		<%= f.input :dropbox_url %>
-		<%= f.input :manager_name %>
-		<%= f.input :manager_email %>
-		<%= f.button :submit, 'Create Project', class: 'submit' %>
+	<%= form_for @project do |f| %>
+		<p><%= f.label :name, "Project Name: " %><%= f.text_field :name, autofocus: true %></p>
+		<p><%= f.label :project_type_id, "Project Type: " %><%= f.collection_select(:project_type_id, ProjectType.all, :id, :name) %></p>
+		<p><%= f.label :password, "Project Password: " %><%= f.text_field :password %></p>
+		<p><%= f.label :bid_date, "Bid Date :" %><%= date_select :project, "bid_date", :start_year => 2015, :end_year => 2025, :order => [:month, :day, :year] %></p>
+		<p><%= f.label :dropbox_url, "Project Documents URL: " %><%= f.text_field :dropbox_url %></p>
+		<p><%= f.label :manager_name, "Project Manager: " %><%= f.text_field :manager_name %></p>
+		<p><%= f.label :project_mail, "Submit Bid Email: " %><%= f.text_field :project_email %></p>
+		<p><%= f.submit 'Create Project' %>
 	<% end %>
 </div>

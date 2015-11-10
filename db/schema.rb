@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151110034422) do
+ActiveRecord::Schema.define(version: 20151110155509) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 20151110034422) do
     t.string   "password"
     t.string   "dropbox_url"
     t.string   "manager_name"
-    t.string   "manager_email"
+    t.string   "project_email"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "bid_date"

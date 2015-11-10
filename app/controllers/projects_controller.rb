@@ -67,7 +67,7 @@ class ProjectsController < ApplicationController
     		:bid_date,
     		:dropbox_url,
     		:manager_name,
-    		:manager_email,
+    		:project_email,
     		:project_type_id)
   	end
 

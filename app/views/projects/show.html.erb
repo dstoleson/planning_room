@@ -2,11 +2,11 @@
     <div class="row">
         <% content_for :title do %>Project Details<% end %>
         <h3>Project Details</h3>
-        <p><%= session[:user]["name"] %>  <%= link_to 'Logout', logout_path %></p>
-        <p><%= @project.name %></p>
-        <p><%= @project.bid_date.strftime("%m/%d/%Y")%></p>
-        <p><%= link_to @project.dropbox_url, @project.dropbox_url, target: "_blank" %></p>
-        <p><%= @project.manager_name %></p>
-        <p><%= mail_to @project.manager_email, nil, :subject => @project.name %></p>
+        <p>Current User: <%= session[:user]["name"] %>  <%= link_to 'Logout', logout_path %></p>
+        <p>Project: <%= @project.name %></p>
+        <p>Project Manager: <%= @project.manager_name %></p>
+        <p>Bid Date: <%= @project.bid_date.strftime("%m/%d/%Y")%></p>
+        <p>Project Documents: <%= link_to @project.dropbox_url, @project.dropbox_url, target: "_blank" %></p>
+        <p>Submit Bid:  <%= mail_to @project.project_email, nil, :subject => @project.name %></p>
     </div>
 </div>

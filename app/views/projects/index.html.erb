@@ -21,7 +21,7 @@
             <td><%= project.bid_date_display %></td>
             <td><%= link_to project.dropbox_url, project.dropbox_url, target: "_blank" %></td>
             <td><%= project.manager_name %></td>
-            <td><%= mail_to project.manager_email, nil, :subject => project.name %></td>
+            <td><%= mail_to project.project_email, nil, :subject => project.name %></td>
           </tr>
         <% end %>
       </tbody>
