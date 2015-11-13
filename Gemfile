@@ -33,10 +33,10 @@ gem 'bcrypt', '~> 3.1.7'
 # gem 'capistrano-rails', group: :development
 
 # simple_form
-#gem 'simple_form'
+# gem 'simple_form'
 
 # bootstrap
-#gem 'bootstrap-sass'
+# gem 'bootstrap-sass'
   
 
 group :development, :test do
