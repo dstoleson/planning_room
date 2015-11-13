@@ -23,38 +23,33 @@ class ProjectsController < ApplicationController
 	def create
 		Rails.logger.debug 'DEBUG: enter create'
 		@project = Project.new(project_params)
-			Rails.logger.debug "DEBUG: project = #{@project.inspect}"
+		Rails.logger.debug "DEBUG: project = #{@project.inspect}"
 		if @project.save
 			redirect_to projects_path, :notice => "Project: #{@project.name}, created."			
-		else
-			render :new
 		end			
 	end
 
 	def edit
 		@project = Project.find(params[:id])
+		@sorted_project_activities = @project.project_activities.sort{|a, b| b.created_at <=> a.created_at}
 	end
 
 	def update
 		Rails.logger.debug 'DEBUG: enter update'
 		@project = Project.find(params[:id])
 			Rails.logger.debug "DEBUG: project = #{@project.inspect}"
-		if @project.update!(project_params)
+		if @project.update(project_params)
 			Rails.logger.debug "DEBUG: project = #{@project.inspect}"
 			redirect_to projects_path, :notice => "Project: #{@project.name}, updated."			
-		else
-			redirect_to projects_path, :notice => "Unabled to update project: #{@project.name}."			
 		end				
 	end
 
 	def show
 		@project = Project.find(params[:id])		
-	end
 
-	def destroy
-		project = Project.find(params[:id])
-		project.destroy
-		redirect_to projects_path, :notice => "Project: #{@project.name}, deleted."
+		if admin_user?
+			redirect_to edit_project_path @project
+		end
 	end
 
 	private
@@ -64,13 +59,13 @@ class ProjectsController < ApplicationController
     	params.require(:project).permit(:name, 
     		:project_type,
     		:password,
+    		:password_confirmation,
     		:bid_date,
     		:dropbox_url,
     		:manager_name,
     		:project_email,
     		:project_type_id)
   	end
-
 end
 
 

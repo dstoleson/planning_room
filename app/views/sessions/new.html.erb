@@ -1,29 +1,18 @@
 <div class="container">
+    <% content_for :title do %>Access Project<% end %>
   	<div class="row">
-	    <% content_for :title do %>Access Project<% end %>
-	    <% if @project %>
-	    	<h3>Access Project: <%= @project.name %></h3>
-    	<% else %>
-    		<h3>Admin Login</h3>
-    	<% end %>
-	    <div class="form">
-			<%= form_for(:session, url: login_path) do |f| %>
-				<% if @project %>
-					<%= f.text_field :name, :placeholder => "Email" %>
-				<% else %>
-					<%= f.text_field :name, :placeholder => "Login" %>
-				<% end %>
-				<% if @project && (not @project.project_type.name == 'current') %>
-					<%= f.text_field :company_name, :placeholder => "Company Name" %>
-				<% end %>
-				<%= f.text_field :password, :placeholder => "Password" %>
-			    <% if @project %>
-					<%= f.submit "Access Project" %>
-    			<% else %>
-					<%= f.submit "Login" %>
-    			<% end %>
-    			<%= hidden_field_tag(:url, "foo") %>
+    	<h3>Access Project: <%= @project.name %></h3>
+	</div>	
+    <div class="form">
+		<%= form_for(:session, url: login_path) do |f| %>
+			<p><%= f.text_field :name, :placeholder => "Email" %></p>
+			<% if @project && (not @project.project_type.name == 'current') %>
+				<p><%= f.text_field :company_name, :placeholder => "Company Name" %></p>
 			<% end %>
-		</div>
+			<% if (@project && (not @project.project_type.name == 'open')) %>
+				<p><%= f.password_field :password, :placeholder => "Password" %></p>
+			<% end %>
+			<p><%= f.submit "Access Project" %></p>
+		<% end %>
 	</div>
 </div>

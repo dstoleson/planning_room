@@ -2,9 +2,6 @@
   <div class="row">
     <% content_for :title do %>Projects<% end %>
     <h3>Projects</h3>
-    <% if session[:user] && session[:user]["name"] %>
-      <p><%= session[:user]["name"] %>    <%= link_to 'Logout', logout_path %></p>
-    <% end %>
     <% if admin_user? %>
       <p><%= link_to 'New Project', new_project_path %></p>
     <% end %>
@@ -17,11 +14,15 @@
             <% else %>          
               <td><%= link_to project.name, project_path(project) %></td>
             <% end %>
-            <td><%= project.project_type.name %></td>
+            <% if admin_user? %>            
+              <td><%= project.project_type.name %></td>
+            <% end %> 
             <td><%= project.bid_date_display %></td>
-            <td><%= link_to project.dropbox_url, project.dropbox_url, target: "_blank" %></td>
-            <td><%= project.manager_name %></td>
-            <td><%= mail_to project.project_email, nil, :subject => project.name %></td>
+            <% if admin_user? %>            
+              <td><%= project.dropbox_url %></td>
+              <td><%= project.manager_name %></td>
+              <td><%= project.project_email %></td>
+            <% end %> 
           </tr>
         <% end %>
       </tbody>
