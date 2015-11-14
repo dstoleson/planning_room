@@ -10,4 +10,9 @@ ProjectType.create([{name: "private", description: "Private"},
 					{name: "current", description: "Current"}])
 puts "Create ProjecTypes: private, open, current"
 
+admin = User.find_by_name("admin")
+unless admin 
+	User.create([{name: "admin", role: "admin", password: "password"}])
+	puts "Created User: admin"
+end
 
