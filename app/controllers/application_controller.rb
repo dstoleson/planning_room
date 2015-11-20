@@ -23,16 +23,16 @@ class ApplicationController < ActionController::Base
   	
     return unless request.get?
   	
-    if (not session[:previous_url]) && (request.path != "/login") && (request.path != '/logout')
+    if (request.path != "/login") && (request.path != '/logout')
   		session[:previous_url] = request.fullpath
-		  Rails.logger.debug "DEBUG: previous_url = #{session[:previous_url]}"
   	end
+    Rails.logger.debug "DEBUG: previous_url = #{session[:previous_url]}"
   end
 
   def store_params
     Rails.logger.debug "DEBUG: ENTER: store_params"
   	return unless request.get?
-      Rails.logger.debug "DEBUG: request.path = #{request.path}"
+    Rails.logger.debug "DEBUG: request.path = #{request.path}"
 
   	if (request.path != "/login")
       Rails.logger.debug "DEBUG: params = #{params}"
@@ -48,19 +48,13 @@ class ApplicationController < ActionController::Base
   def requires_admin
   	user = session[:user]
   	if user.nil? || user["role"] != 'admin'
-  		redirect_to '/login'
+  		redirect_to '/admin'
   	end
   end
 
   def requires_user
     user = session[:user]
   	if user.nil? || user["role"] != 'user'
-  		redirect_to '/login'
-  	end
-  end
-
-  def requires_login
-  	if session[:user].nil?
   		redirect_to '/login'
   	end
   end

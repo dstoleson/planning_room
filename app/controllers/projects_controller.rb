@@ -1,19 +1,15 @@
 class ProjectsController < ApplicationController
 
-	before_action :requires_login, only: [:show]
+	before_action :requires_user, only: [:show]
 	before_action :requires_admin, only: [:new, :create, :edit, :update, :destroy]
 
 	def index
-		Rails.logger.debug "DEBUG: session = #{session}"
+		Rails.logger.debug 'DEBUG: enter index'
 		if admin_user?
 			@projects = Project.order(name: :asc)
 		else
-			@projects = Project.joins(:project_type).where(project_types: {name: "open"}).order(:name)
+			@projects = Project.joins(:project_type).where(project_types: {name: "open"}).order(name: :asc)
 		end
-		Rails.logger.debug "DEBUG: projects = #{@projects}"
-		@projects.each do |project|
-			Rails.logger.debug "DEBUG: project = #{project.inspect}"
-		end			
 	end
 
 	def new
@@ -23,7 +19,6 @@ class ProjectsController < ApplicationController
 	def create
 		Rails.logger.debug 'DEBUG: enter create'
 		@project = Project.new(project_params)
-		Rails.logger.debug "DEBUG: project = #{@project.inspect}"
 		if @project.save
 			redirect_to projects_path, :notice => "Project: #{@project.name}, created."			
 		end			
@@ -37,14 +32,13 @@ class ProjectsController < ApplicationController
 	def update
 		Rails.logger.debug 'DEBUG: enter update'
 		@project = Project.find(params[:id])
-			Rails.logger.debug "DEBUG: project = #{@project.inspect}"
 		if @project.update(project_params)
-			Rails.logger.debug "DEBUG: project = #{@project.inspect}"
 			redirect_to projects_path, :notice => "Project: #{@project.name}, updated."			
 		end				
 	end
 
 	def show
+		Rails.logger.debug 'DEBUG: enter show'
 		@project = Project.find(params[:id])		
 
 		if admin_user?
