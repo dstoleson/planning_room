@@ -80,16 +80,24 @@ class SessionsController < ApplicationController
 	def destroy
 		Rails.logger.debug "DEBUG: ENTER: destroy"		
 		
+		redirect_url = nil
+
 		if admin_user?
-			redirect_to '/admin_logout'			
+			redirect_url = '/admin_logout'			
 		else
 			if session[:project_id]
-				redirect_to '/open'
+				redirect_url = '/open'
 			# elsif session[:initial_url]
 			# redirect_to session[:initial_url]
 			end
 		end
 		reset_session
+
+		if redirect_url
+			redirect_to redirect_url
+		else
+			redirect_to '/'
+		end
 	end
 
 end

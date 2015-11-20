@@ -8,6 +8,7 @@ class ProjectsController < ApplicationController
 		if admin_user?
 			@projects = Project.order(name: :asc)
 		else
+			reset_session
 			@projects = Project.joins(:project_type).where(project_types: {name: "open"}).order(name: :asc)
 		end
 	end
