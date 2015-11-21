@@ -27,7 +27,7 @@ class ProjectsController < ApplicationController
 
 	def edit
 		@project = Project.find(params[:id])
-		@sorted_project_activities = @project.project_activities.sort{|a, b| b.created_at <=> a.created_at}
+		@sorted_project_activities = ProjectActivity.order("to_char(created_at, 'YYYYMMDD') DESC", email: :asc)
 	end
 
 	def update
