@@ -72,7 +72,7 @@ class SessionsController < ApplicationController
 			return
 		else
 			flash[:notice] = "Project password was invalid."
-			redirect_to project
+			redirect_to session[:initial_url]
 			return
 		end
 	end
@@ -87,8 +87,8 @@ class SessionsController < ApplicationController
 		else
 			if session[:project_id]
 				redirect_url = '/open'
-			# elsif session[:initial_url]
-			# redirect_to session[:initial_url]
+			elsif session[:initial_url]
+				redirect_url = session[:initial_url]
 			end
 		end
 		reset_session
