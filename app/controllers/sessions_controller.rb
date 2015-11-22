@@ -36,23 +36,50 @@ class SessionsController < ApplicationController
 	def create
 		Rails.logger.debug "DEBUG: ENTER: create"
 		Rails.logger.debug "DEBUG: session[:project_id] = #{session[:project_id]}"
+		Rails.logger.debug "DEBUG: email = #{params[:session][:name]}"
+		Rails.logger.debug "DEBUG: company_name = #{params[:session][:company_name]}"
 		Rails.logger.debug "DEBUG: password = #{params[:session][:password]}"
 
 		session[:initial_url] = session[:previous_url]
 		Rails.logger.debug "DEBUG: session[:initial_url] = #{session[:initial_url]}"
 
+		email_regex = /\A[-a-z0-9_+\.]+\@([-a-z0-9]+\.)+[a-z0-9]{2,4}\z/i
+
+		# always require an email address
+		if not (params[:session] && params[:session][:name] && (email_regex =~ params[:session][:name]))
+			flash[:notice] = "Enter a valid email address."
+			redirect_to session[:initial_url]
+			return
+		end
+
 		if session[:project_id]
+			# require company name 
+			if params[:session].nil? || params[:session][:company_name].nil? || params[:session][:company_name] == ""
+				flash[:notice] = "Enter a company name."
+				redirect_to session[:initial_url]
+				return
+			end
+
 			# if there is a :project_id a password is not required
 			# todo: check that it is a open project(?)
 			project = Project.find(session[:project_id])
+
 		else
+			# if private, require a company name
+			if (session[:initial_url] == "/private") && (params[:session].nil? || params[:session][:company_name].nil? || params[:session][:company_name] == "")
+				Rails.logger.debug "DEBUG: woot"
+				flash[:notice] = "Enter a company name."
+				redirect_to session[:initial_url]
+				return
+			end
+
 			# find the project that matches the password parameter
 			project = Project.find_by_password(params[:session][:password])
 		end
 
 		Rails.logger.debug "DEBUG: project = #{project}"
 
-		if project
+		if project			
 			# create a 'temp' user with role of 'user' to be use for authorization
 			# during the session
 			user = User.new(name: params[:session][:name], role: 'user')
