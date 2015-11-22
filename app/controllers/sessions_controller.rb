@@ -53,6 +53,8 @@ class SessionsController < ApplicationController
 		end
 
 		if session[:project_id]
+			project_type = 'open'
+
 			# require company name 
 			if params[:session].nil? || params[:session][:company_name].nil? || params[:session][:company_name] == ""
 				flash[:notice] = "Enter a company name."
@@ -62,24 +64,28 @@ class SessionsController < ApplicationController
 
 			# if there is a :project_id a password is not required
 			# todo: check that it is a open project(?)
-			project = Project.find(session[:project_id])
+			project = Project.joins(:project_type).where(id: session[:project_id], project_types: {name: project_type})
 
 		else
 			# if private, require a company name
-			if (session[:initial_url] == "/private") && (params[:session].nil? || params[:session][:company_name].nil? || params[:session][:company_name] == "")
-				Rails.logger.debug "DEBUG: woot"
-				flash[:notice] = "Enter a company name."
-				redirect_to session[:initial_url]
-				return
+			if (session[:initial_url] == "/private")
+				project_type = 'private'
+				if (params[:session].nil? || params[:session][:company_name].nil? || params[:session][:company_name] == "")
+					flash[:notice] = "Enter a company name."
+					redirect_to session[:initial_url]
+					return
+				end
+			else
+				project_type = 'current'
 			end
 
 			# find the project that matches the password parameter
-			project = Project.find_by_password(params[:session][:password])
+			project = Project.joins(:project_type).where(password: params[:session][:password], project_types: {name: project_type})
 		end
 
 		Rails.logger.debug "DEBUG: project = #{project}"
 
-		if project			
+		if project && project[0]			
 			# create a 'temp' user with role of 'user' to be use for authorization
 			# during the session
 			user = User.new(name: params[:session][:name], role: 'user')
@@ -90,12 +96,12 @@ class SessionsController < ApplicationController
 
 			# insert activity tracking record
 			project_activity = ProjectActivity.new()
-			project_activity.project = project
+			project_activity.project = project[0]
 			project_activity.email = params[:session][:name]
 			project_activity.company_name = params[:session][:company_name]
 			project_activity.save
 
-			redirect_to project 
+			redirect_to project[0] 
 			return
 		else
 			flash[:notice] = "Project password was invalid."
