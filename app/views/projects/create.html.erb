@@ -17,7 +17,7 @@
 			<p><%= f.label :name, "Project Name: " %><%= f.text_field :name, autofocus: true %></p>
 			<p><%= f.label :project_type_id, "Project Type: " %><%= f.collection_select(:project_type_id, ProjectType.all, :id, :name) %></p>
 			<p><%= f.label :password, "Project Password: " %><%= f.password_field :password %></p>		
-			<p><%= f.label :password, "Confirm Password: " %><%= f.password_field :password_confiration %></p>
+			<p><%= f.label :password, "Confirm Password: " %><%= f.password_field :password_confirmation %></p>
 			<p><%= f.label :bid_date, "Bid Date :" %><%= date_select :project, "bid_date", :start_year => 2015, :end_year => 2025, :order => [:month, :day, :year] %></p>
 			<p><%= f.label :dropbox_url, "Dropbox URL: " %><%= f.text_field :dropbox_url %></p>
 			<p><%= f.label :manager_name, "Project Manager: " %><%= f.text_field :manager_name %></p>

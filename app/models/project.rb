@@ -5,8 +5,13 @@ class Project < ActiveRecord::Base
 
 	validates_presence_of :name, :message => "Project Name cannot be empty."
 	validates_presence_of :project_type, :message => "A Project Type must be selected."
-	validates_presence_of :password, :message => "Password cannot be empty."
-	validates_confirmation_of :password, :message => "Confirmation doesn't match password."
+
+	with_options if: :password_required? do |p|
+		p.validates_presence_of :password, :message => "Password cannot be empty."
+		#p.validates_presence_of :password_confirmation, :message => "Password confimation cannot by empty."
+		p.validates_confirmation_of :password, :message => "Confirmation doesn't match password."
+	end
+
 	validates_presence_of :dropbox_url, :message => "Dropbox URL cannot be empty."
 	validates_presence_of :manager_name, :message => "Project Manager cannot be empty."
 	validates_presence_of :project_email, :message => "Submit Bid Email cannot be empty."
@@ -18,5 +23,9 @@ class Project < ActiveRecord::Base
 		if not bid_date.nil?
 			return bid_date.strftime("%m/%d/%Y")
 		end
+	end
+
+	def password_required?
+		return project_type.name != 'current'
 	end
 end
