@@ -1,28 +1,70 @@
 <div class="container">
-	<% content_for :title do %>New Project<% end %>
-  	<div class="row">
-		<% if @project.errors.any? %>
-		  <div id="error_explanation">
-		    <ul>
-		    <% @project.errors.messages.each do |key, msg| %>
-		      <li><%= msg %></li>
-		    <% end %>
-		    </ul>
-		  </div>
-		<% end %>
-		<h3>New Project</h3>
+	<div class="row">
+		<div class="col-md-12">
+		<% content_for :title do %>New Project<% end %>
+	  	
+			<% if @project.errors.any? %>
+			  <div id="error_explanation">
+			    <ul>
+			    <% @project.errors.messages.each do |key, msg| %>
+			      <li><%= msg %></li>
+			    <% end %>
+			    </ul>
+			  </div>
+			<% end %>
+				<h3>New Project</h3>
+			
+		</div>
 	</div>	
 	<div class="form">
-		<%= form_for @project do |f| %>
-			<p><%= f.label :name, "Project Name: " %><%= f.text_field :name, autofocus: true %></p>
-			<p><%= f.label :project_type_id, "Project Type: " %><%= f.collection_select(:project_type_id, ProjectType.all, :id, :name) %></p>
-			<p><%= f.label :password, "Project Password: " %><%= f.password_field :password %></p>		
-			<p><%= f.label :password, "Confirm Password: " %><%= f.password_field :password_confirmation %></p>
-			<p><%= f.label :bid_date, "Bid Date :" %><%= date_select :project, "bid_date", :start_year => 2015, :end_year => 2025, :order => [:month, :day, :year] %></p>
-			<p><%= f.label :dropbox_url, "Project Documents URL: " %><%= f.text_field :dropbox_url %></p>
-			<p><%= f.label :manager_name, "Project Manager: " %><%= f.text_field :manager_name %></p>
-			<p><%= f.label :project_mail, "Submit Bid Email: " %><%= f.text_field :project_email %></p>
-			<p><%= f.submit 'Create Project' %></p>
+		<%= form_for(@project, html: {class: 'form-horizontal', role: 'form'}) do |f| %>
+			<%#= f.input :name, label: "Project Name:", autofocus: true %>
+			<div class="form-group">
+				<%= f.label :name, "Project Name:", class: "col-md-5 control-label" %>
+				<div class="col-md-7"><%= f.text_field :name, autofocus: true, class: 'form-control' %></div>
+			</div>
+
+			<div class="form-group">
+				<%= f.label :project_type_id, "Project Type:", class: "col-md-5 control-label" %>
+				<div class="col-md-7"><%= f.collection_select :project_type_id, ProjectType.all, :id, :name, {prompt: "Select Project Type"}, {class: "form-control"} %></div>
+			</div>
+
+			<div class="form-group">
+				<%= f.label :password, "Project Password:", class: "col-md-5 control-label" %>
+				<div  class="col-md-7"><%= f.password_field :password, class: 'form-control'  %></div>
+			</div>
+
+			<div class="form-group">
+				<%= f.label :password_confirmation, "Confirm Password:", class: "col-md-5 control-label" %>
+				<div class="col-md-7"><%= f.password_field :password_confirmation, label: "Password Confirmation", class: 'form-control' %></div>
+			</div>
+
+			<div class="form-group">
+				<%= f.label :bid_date, "Bid Date:", class: "col-md-5 control-label" %>
+				<div class="col-md-7">
+					<%= date_select :project, "bid_date", :start_year => 2015, :end_year => 2025, :order => [:month, :day, :year], html_options: {class: "form-control"} %>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<%= f.label :dropbox_url, "Project Documents URL:", class: "col-md-5 control-label" %>
+				<div class="col-md-7"><%= f.text_field :dropbox_url, class: "form-control" %></div>
+			</div>
+
+			<div class="form-group">
+				<%= f.label :manager_name, "Project Manager:", class: "col-md-5 control-label" %>
+				<div class="col-md-7"><%= f.text_field :manager_name, class: "form-control" %></div>
+			</div>
+
+			<div class="form-group">
+				<%= f.label :project_mail, "Submit Bid Email:", class: "col-md-5 control-label" %>
+				<div class="col-md-7"><%= f.text_field :project_email, class: "form-control" %></div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-md-offset-5 col-md-7"><%= f.submit 'Create Project', class: "btn btn-primary"  %></div>
+			</div>			
+			
 		<% end %>
 	</div>
 </div>

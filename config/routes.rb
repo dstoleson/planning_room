@@ -2,6 +2,8 @@ Rails.application.routes.draw do
 
   resources :projects
 
+  root to: 'home#index'
+
   get '/private' => 'sessions#new'
   get '/current' => 'sessions#new'
   get '/open' => 'projects#index'

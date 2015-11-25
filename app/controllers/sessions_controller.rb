@@ -121,7 +121,8 @@ class SessionsController < ApplicationController
 			if session[:project_id]
 				redirect_url = '/open'
 			elsif session[:initial_url]
-				redirect_url = session[:initial_url]
+				# redirect_url = session[:initial_url]
+				redirect_to = '/'
 			end
 		end
 		reset_session
