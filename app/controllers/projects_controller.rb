@@ -27,13 +27,13 @@ class ProjectsController < ApplicationController
 
 	def edit
 		@project = Project.find(params[:id])
-		@sorted_project_activities = ProjectActivity.order("to_char(created_at, 'YYYYMMDD') DESC", email: :asc)
+		@sorted_project_activities = @project.project_activities.order("to_char(created_at, 'YYYYMMDD') DESC", email: :asc)
 	end
 
 	def update
 		Rails.logger.debug 'DEBUG: enter update'
 		@project = Project.find(params[:id])
-		@sorted_project_activities = ProjectActivity.order("to_char(created_at, 'YYYYMMDD') DESC", email: :asc)
+		@sorted_project_activities = @project.project_activities.order("to_char(created_at, 'YYYYMMDD') DESC", email: :asc)
 		if @project.update(project_params)
 			redirect_to projects_path, :notice => "Project: #{@project.name}, updated."			
 		end				
