@@ -5,6 +5,7 @@
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+  <link href='http://fonts.googleapis.com/css?family=Oswald:400,700' rel='stylesheet' type='text/css'>
 </head>
 <body>
 
@@ -19,7 +20,7 @@
         <span class="icon-bar"></span>
       </button>
       <!-- <a class="navbar-brand" href="#">Wieser Brothers, Plan Room</a> -->
-      <%= image_tag 'logo.png', class: 'img-responsive', width: "150", style: "margin:8px 0;" %>
+      <%= image_tag 'logo.png', class: 'img-responsive', width: "130", style: "margin:8px;" %>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -54,7 +55,24 @@
   
 </div>
 
-<%= yield %>
+<div class="content"><%= yield %></div>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <%= link_to 'Need Help? Contact us.', 'bids@wieserbrothers.com' %><br /><br />
+        <%= link_to 'Visit our website: WieserBrothers.com', 'http://www.wieserbrothers.com' %>
+        <% d = DateTime.now %><br />
+        <small>&copy; <%= d.strftime("%Y") %> - Wieser Brothers General Contractor, INC.</small>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</footer>
 
 </body>
 </html>

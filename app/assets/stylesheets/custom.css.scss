@@ -1,3 +1,13 @@
+$headline-font:'Oswald', sans-serif;
+$wb-green:rgba(0,87,60, 1);
+$wb-green-dark:rgba(5,42,9, 1);
+// 0,74,48
+$wb-skyblue:#6dd0f7;
+// $wb-orange:#ff6914;
+$wb-text:lighten(gray,47%);
+$wb-txt-color:#808080;
+$white:#ffffff;
+
 $wb-green:rgba(0,87,60, 1);
 $wb-green-dark:rgba(5,42,9, 1);
 
@@ -8,3 +18,33 @@ $navbar-default-link-color:#fff;
 $navbar-default-color:#fff;
 
 
+h1, h2, h3 {font-family: $headline-font;}
+
+#home-tri-nav {
+  margin-top:60px;
+  font-weight:200;
+}
+
+.btn-primary {
+  background-color:lighten($wb-green, 10%);;
+  &:hover {background-color:$wb-green;}
+}
+
+#disclaimer {
+  margin-top:60px;
+}
+
+.content {
+  min-height: 70vh;
+}
+
+footer {
+  font-family: $headline-font;
+  font-size:20px;
+  padding:40px 20px;
+  min-height:30vh;
+  background-color: #f8f8f8;
+  a {color:$wb-green;}
+  small {font-size:10px;font-family:helvetica, arial, sans-serif;color:#cdcdcd;margin-top:10px;}
+
+}
