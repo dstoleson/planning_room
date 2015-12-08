@@ -48,3 +48,6 @@ footer {
   small {font-size:10px;font-family:helvetica, arial, sans-serif;color:#cdcdcd;margin-top:10px;}
 
 }
+//table {border-top:1px solid #fff !important;}
+table tr:first-child {border-top:1px solid red;}
+table {margin-top:-1px;}

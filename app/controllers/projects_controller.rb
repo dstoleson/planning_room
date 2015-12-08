@@ -28,6 +28,7 @@ class ProjectsController < ApplicationController
 	def edit
 		@project = Project.find(params[:id])
 		@sorted_project_activities = @project.project_activities.order("to_char(created_at, 'YYYYMMDD') DESC", email: :asc)
+		@sorted_project_email = @project.project_activities.order(email: :asc)
 	end
 
 	def update
