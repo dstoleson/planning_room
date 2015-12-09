@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>Planning Room : <%= yield :title %></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
@@ -20,7 +21,7 @@
         <span class="icon-bar"></span>
       </button>
       <!-- <a class="navbar-brand" href="#">Wieser Brothers, Plan Room</a> -->
-      <%= image_tag 'logo.png', class: 'img-responsive', width: "130", style: "margin:8px;" %>
+      <%= link_to (image_tag 'logo.png', class: 'img-responsive', width: "130", style: "margin:8px;"), "/" %>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -32,6 +33,7 @@
         <% end %>
       </ul>
       <ul class="nav navbar-nav navbar-right">
+        <li><a href="/">Home</a></li>
         <li><a href="/private">Private Project</a></li>
         <li><a href="/open">Open Projects</a></li>
         <li><a href="/current">Current Project</a></li>

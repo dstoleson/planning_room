@@ -16,6 +16,7 @@ $navbar-height:50px;
 $navbar-default-bg:$wb-green;
 $navbar-default-link-color:#fff;
 $navbar-default-color:#fff;
+$navbar-default-link-hover-color:lighten($wb-green, 30%);
 
 
 h1, h2, h3 {font-family: $headline-font;}
@@ -23,6 +24,7 @@ h1, h2, h3 {font-family: $headline-font;}
 #home-tri-nav {
   margin-top:60px;
   font-weight:200;
+
 }
 
 .btn-primary {
