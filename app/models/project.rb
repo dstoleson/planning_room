@@ -26,6 +26,6 @@ class Project < ActiveRecord::Base
 	end
 
 	def password_required?
-		return project_type.name != 'current'
+		return project_type && (project_type.name != 'current')
 	end
 end
