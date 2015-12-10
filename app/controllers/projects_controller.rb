@@ -15,6 +15,8 @@ class ProjectsController < ApplicationController
 
 	def new
 		@project = Project.new		
+		@button_title = "Create Project"
+		@title = "New Project"
 	end
 
 	def create
@@ -23,21 +25,27 @@ class ProjectsController < ApplicationController
 		if @project.save
 			redirect_to projects_path, :notice => "Project: #{@project.name}, created."			
 		end			
+		@button_title = "Create Project"
+		@title = "New Project"
 	end
 
 	def edit
-		@project = Project.find(params[:id])
-		@sorted_project_activities = @project.project_activities.order("to_char(created_at, 'YYYYMMDD') DESC", email: :asc)
-		@sorted_project_email = @project.project_activities.order(email: :asc)
+		@project = Project.find(params[:id])		
+		project_activities
+		@button_title = "Update Project"
+		@title = "Edit Project"
 	end
 
 	def update
-		Rails.logger.debug 'DEBUG: enter update'
 		@project = Project.find(params[:id])
-		@sorted_project_activities = @project.project_activities.order("to_char(created_at, 'YYYYMMDD') DESC", email: :asc)
 		if @project.update(project_params)
 			redirect_to projects_path, :notice => "Project: #{@project.name}, updated."			
+			return
 		end				
+		project_activities
+
+		@button_title = "Update Project"
+		@title = "Edit Project"
 	end
 
 	def show
@@ -63,6 +71,11 @@ class ProjectsController < ApplicationController
     		:project_email,
     		:project_type_id)
   	end
+
+  	def project_activities
+		@sorted_project_activities = @project.project_activities.order("to_char(created_at, 'YYYYMMDD') DESC", email: :asc)
+		@sorted_project_email = @project.project_activities.order(email: :asc)
+	end	
 end
 
 
