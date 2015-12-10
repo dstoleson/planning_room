@@ -2,17 +2,8 @@
     <div class="row">
       <div class="col-md-12">
         <% content_for :title do %>Project Details<% end %>
-<!--         <h3>Project Details</h3>
-        <p>Project: <%#= @project.name %></p>
-        <p>Project Manager: <%#= @project.manager_name %></p>
-        <%# if @project.project_type.name == 'private' %>
-            <p>Bid Date: <%#= @project.bid_date.strftime("%m/%d/%Y")%></p>
-        <%# end %>
-        <p>Project Documents: <%#= link_to @project.dropbox_url, @project.dropbox_url, target: "_blank" %></p>
-        <p>Submit Bid:  <%#= mail_to @project.project_email, nil, :subject => @project.name %></p> -->
         <h3>Project Details: <%= @project.name %></h3>
         <table class="table table-striped">
-
           <tr>
             <td class="col-md-3">Project Manager:</td>
             <td class="col-md-"><%= @project.manager_name %></td>
@@ -31,9 +22,6 @@
             <td>Submit Bid:</td>
             <td><%= mail_to @project.project_email, nil, :subject => @project.name %></td>
           </tr>
-
-
-
         </table>
       </div>
     </div>
