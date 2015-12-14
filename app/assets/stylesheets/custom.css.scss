@@ -39,6 +39,11 @@ h1, h2, h3 {font-family: $headline-font;}
 
 .content {
   min-height: 80vh;
+  background-image:image-url("stock-vector-architecture-background-350617100-light.jpg");
+  background-size:cover;
+  background-position-y:30%;
+  margin-top:-20px;
+  padding-top:30px;
 }
 
 footer {
