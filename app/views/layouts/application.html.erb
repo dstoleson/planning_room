@@ -26,7 +26,7 @@
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav navbar-right" style="background-color:black;">
+      <ul class="nav navbar-nav navbar-right admin-login" ><!-- style="background-color:black;" -->
         <% if session && session[:user] %>
         <p class="navbar-text">Logged in as: <%= session[:user]["name"].capitalize %></p>
          <li><%= link_to 'Logout', logout_path %></li>

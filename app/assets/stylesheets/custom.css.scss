@@ -12,7 +12,7 @@ $wb-green:rgba(0,87,60, 1);
 $wb-green-dark:rgba(5,42,9, 1);
 
 $navbar-border-radius:0px;
-$navbar-height:50px;
+$navbar-height:65px;
 $navbar-default-bg:$wb-green;
 $navbar-default-link-color:#fff;
 $navbar-default-color:#fff;
@@ -39,11 +39,15 @@ h1, h2, h3 {font-family: $headline-font;}
 
 .content {
   min-height: 80vh;
-  background-image:image-url("stock-vector-architecture-background-350617100-light.jpg");
+  background-image:image-url('stock-purchased-35061700-lighter.gif');
   background-size:cover;
   background-position-y:30%;
   margin-top:-20px;
   padding-top:30px;
+}
+
+.admin-login {
+  background-color:rgba(0,0,0,.2);
 }
 
 footer {
