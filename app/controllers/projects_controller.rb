@@ -6,11 +6,16 @@ class ProjectsController < ApplicationController
 	def index
 		Rails.logger.debug 'DEBUG: enter index'
 		if admin_user?
-			@projects = Project.order(name: :asc)
+			show_archive_switch
+			if @show_archive			
+				@projects = Project.order(name: :asc)
+			else
+				@projects = Project.where(deleted: false).order(name: :asc)
+			end
 		else
 			reset_session
-			@projects = Project.joins(:project_type).where(project_types: {name: "open"}).order(name: :asc)
-		end
+			@projects = Project.joins(:project_type).where(project_types: {name: "open"}, deleted: false).order(name: :asc)
+		end		
 	end
 
 	def new
@@ -57,6 +62,29 @@ class ProjectsController < ApplicationController
 		end
 	end
 
+	def archive
+		Rails.logger.debug 'DEBUG: enter archive'
+		@project = Project.find(params[:id])
+		@project.deleted = true
+		@project.save
+		redirect_to projects_path
+	end
+
+	def unarchive
+		Rails.logger.debug 'DEBUG: enter unarchive'
+		@project = Project.find(params[:id])
+		@project.deleted = false
+		@project.save
+		redirect_to projects_path
+	end
+
+	def switch_show_archive
+		Rails.logger.debug 'DEBUG: enter switch_show_archive'
+		show_archive = show_archive_switch
+		session[:show_archive] = (not show_archive)
+		redirect_to projects_path
+	end
+
 	private
 
 	def project_params
@@ -76,6 +104,14 @@ class ProjectsController < ApplicationController
 		@sorted_project_activities = @project.project_activities.order("to_char(created_at, 'YYYYMMDD') DESC", email: :asc)
 		@sorted_project_email = @project.project_activities.order(email: :asc)
 	end	
+
+	def show_archive_switch
+		if session[:show_archive].nil?
+			session[:show_archive] = false
+		end
+
+		@show_archive = session[:show_archive]
+	end
 end
 
 

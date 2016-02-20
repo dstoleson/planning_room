@@ -1,6 +1,13 @@
 Rails.application.routes.draw do
 
-  resources :projects
+  resources :projects do
+    member do
+      get 'archive'
+      get 'unarchive'
+    end
+  end
+
+  get "switch_show_archive" => "projects#switch_show_archive"
 
   root to: 'home#index'
 

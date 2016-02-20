@@ -3,7 +3,14 @@
     <% content_for :title do %>Projects<% end %>
     <h3>Projects</h3>
     <% if admin_user? %>
-      <p><%= link_to 'New Project', new_project_path %></p>
+      <p>
+        <%= link_to 'New Project', new_project_path %>
+        <% if @show_archive %>
+          <%= link_to "Hide Archived", controller: "projects", action: "switch_show_archive" %>
+        <% else %>
+          <%= link_to "Show Archived", controller: "projects", action: "switch_show_archive" %>
+        <% end %>
+      </p>
     <% end %>
     <table class="table">
       <tbody>
@@ -22,6 +29,11 @@
               <td><%= project.dropbox_url %></td>
               <td><%= project.manager_name %></td>
               <td><%= project.project_email %></td>
+              <td><% if project.deleted %>
+                    <%= link_to 'Unarchive Project', unarchive_project_path(project) %>
+                  <% else %>
+                    <%= link_to 'Archive Project', archive_project_path(project) %>
+                  <% end %>
             <% end %> 
           </tr>
         <% end %>

@@ -85,24 +85,32 @@ class SessionsController < ApplicationController
 
 		Rails.logger.debug "DEBUG: project = #{project}"
 
-		if project && project[0]			
-			# create a 'temp' user with role of 'user' to be use for authorization
-			# during the session
-			user = User.new(name: params[:session][:name], role: 'user')
-			session[:user] = user
+		if project && project[0]
 
-			Rails.logger.debug "DEBUG: email = #{params[:session][:name]}"
-			Rails.logger.debug "DEBUG: password = #{params[:session][:company_name]}"
+			# don't allow access to a deleted project
+			if project[0].deleted
+				flash[:notice] = "Project is no longer available."
+				redirect_to session[:initial_url]
+				return
+			else
+				# create a 'temp' user with role of 'user' to be use for authorization
+				# during the session
+				user = User.new(name: params[:session][:name], role: 'user')
+				session[:user] = user
 
-			# insert activity tracking record
-			project_activity = ProjectActivity.new()
-			project_activity.project = project[0]
-			project_activity.email = params[:session][:name]
-			project_activity.company_name = params[:session][:company_name]
-			project_activity.save
+				Rails.logger.debug "DEBUG: email = #{params[:session][:name]}"
+				Rails.logger.debug "DEBUG: password = #{params[:session][:company_name]}"
 
-			redirect_to project[0] 
-			return
+				# insert activity tracking record
+				project_activity = ProjectActivity.new()
+				project_activity.project = project[0]
+				project_activity.email = params[:session][:name]
+				project_activity.company_name = params[:session][:company_name]
+				project_activity.save
+
+				redirect_to project[0] 
+				return
+			end
 		else
 			flash[:notice] = "Project password was invalid."
 			redirect_to session[:initial_url]
