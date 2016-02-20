@@ -4,7 +4,7 @@
     <h3>Projects</h3>
     <% if admin_user? %>
       <p>
-        <%= link_to 'New Project', new_project_path %>
+        <%= link_to 'New Project', new_project_path %> |
         <% if @show_archive %>
           <%= link_to "Hide Archived", controller: "projects", action: "switch_show_archive" %>
         <% else %>
