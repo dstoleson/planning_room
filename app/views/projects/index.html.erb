@@ -32,7 +32,7 @@
               <td><% if project.deleted %>
                     <%= link_to 'Unarchive Project', unarchive_project_path(project) %>
                   <% else %>
-                    <%= link_to 'Archive Project', archive_project_path(project) %>
+                    <%= link_to 'Archive Project', archive_project_path(project), data: {confirm: "Archive #{project.name}?" }  %>
                   <% end %>
             <% end %> 
           </tr>
