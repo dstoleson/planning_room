@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
 	def new
 
 		Rails.logger.debug "DEBUG: ENTER: new"
-		Rails.logger.debug "DEBUG: previous_params = #{session[:previous_params]}"	
+		Rails.logger.debug "DEBUG: previous_params = #{session[:previous_params]}"
 		Rails.logger.debug "DEBUG: request.path = #{request.path}"
 
 		if not session[:user].nil?
@@ -55,7 +55,7 @@ class SessionsController < ApplicationController
 		if session[:project_id]
 			project_type = 'open'
 
-			# require company name 
+			# require company name
 			if params[:session].nil? || params[:session][:company_name].nil? || params[:session][:company_name] == ""
 				flash[:notice] = "Enter a company name."
 				redirect_to session[:initial_url]
@@ -87,30 +87,23 @@ class SessionsController < ApplicationController
 
 		if project && project[0]
 
-			# don't allow access to a deleted project
-			if project[0].deleted
-				flash[:notice] = "Project is no longer available."
-				redirect_to session[:initial_url]
-				return
-			else
-				# create a 'temp' user with role of 'user' to be use for authorization
-				# during the session
-				user = User.new(name: params[:session][:name], role: 'user')
-				session[:user] = user
+			# create a 'temp' user with role of 'user' to be use for authorization
+			# during the session
+			user = User.new(name: params[:session][:name], role: 'user')
+			session[:user] = user
 
-				Rails.logger.debug "DEBUG: email = #{params[:session][:name]}"
-				Rails.logger.debug "DEBUG: password = #{params[:session][:company_name]}"
+			Rails.logger.debug "DEBUG: email = #{params[:session][:name]}"
+			Rails.logger.debug "DEBUG: password = #{params[:session][:company_name]}"
 
-				# insert activity tracking record
-				project_activity = ProjectActivity.new()
-				project_activity.project = project[0]
-				project_activity.email = params[:session][:name]
-				project_activity.company_name = params[:session][:company_name]
-				project_activity.save
+			# insert activity tracking record
+			project_activity = ProjectActivity.new()
+			project_activity.project = project[0]
+			project_activity.email = params[:session][:name]
+			project_activity.company_name = params[:session][:company_name]
+			project_activity.save
 
-				redirect_to project[0] 
-				return
-			end
+			redirect_to project[0]
+			return
 		else
 			flash[:notice] = "Project password was invalid."
 			redirect_to session[:initial_url]
@@ -119,12 +112,12 @@ class SessionsController < ApplicationController
 	end
 
 	def destroy
-		Rails.logger.debug "DEBUG: ENTER: destroy"		
-		
+		Rails.logger.debug "DEBUG: ENTER: destroy"
+
 		redirect_url = nil
 
 		if admin_user?
-			redirect_url = '/admin_logout'			
+			redirect_url = '/admin_logout'
 		else
 			if session[:project_id]
 				redirect_url = '/open'
