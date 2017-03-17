@@ -61,7 +61,7 @@ class ProjectsController < ApplicationController
 
 	def project_params
 		Rails.logger.debug("DEBUG: params = #{params}")
-    	params.require(:project).permit(:name,
+		params.require(:project).permit(:name,
     		:project_type,
     		:password,
     		:password_confirmation,
